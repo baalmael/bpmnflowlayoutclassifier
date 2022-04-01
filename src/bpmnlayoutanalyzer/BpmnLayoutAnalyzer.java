@@ -1,6 +1,6 @@
 package bpmnlayoutanalyzer;
 
-import bpmnlayoutanalyzer.flowlayout.LayoutDirectionAnalyzer;
+import bpmnlayoutanalyzer.flowlayout.FlowLayoutAnalyzer;
 import bpmnlayoutanalyzer.layoutanalyzer.bpmnmodel.BpmnProcess;
 import bpmnlayoutanalyzer.layoutanalyzer.bpmnxml.BpmnLayoutSetter;
 import bpmnlayoutanalyzer.layoutanalyzer.bpmnxml.BpmnReader;
@@ -17,7 +17,7 @@ import java.io.IOException;
 public class BpmnLayoutAnalyzer {
 
 
-    private final LayoutDirectionAnalyzer analyzer = new LayoutDirectionAnalyzer();
+    private final FlowLayoutAnalyzer analyzer = new FlowLayoutAnalyzer();
     private long timeSpentInNanosOnAnalyzer = 0L;
 
     private final BpmnLayoutSetter bpmnLayoutSetter = new BpmnLayoutSetter();

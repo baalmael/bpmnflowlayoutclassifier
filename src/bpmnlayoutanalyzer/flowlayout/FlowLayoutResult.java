@@ -9,13 +9,13 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class LayoutDirectionResult extends Result {
+public class FlowLayoutResult extends Result {
 
     private List<String> simplifiedVectorDirectionPerPath = new ArrayList<>();
-    private List<String> layoutDirectionPerPath = new ArrayList<>();
+    private List<String> flowLayoutPerPath = new ArrayList<>();
     private double combinationError = 0.0;
     private double letterAccuracyError = 0.0;
-    private String layoutDirection = null;
+    private String flowLayout = null;
     private long outDegMultiplicated;
     private int numberOfSplitsAndJoins;
     private int numberOfBoundaryEvents;
@@ -26,21 +26,21 @@ public class LayoutDirectionResult extends Result {
     private double portionOfFlowNodesAnalyzed;
     private long analyzingTime;
 
-    public LayoutDirectionResult(BpmnProcess p) {
+    public FlowLayoutResult(BpmnProcess p) {
         super(p);
     }
 
     @Override
     public List<Object> getValues() {
-        calculateLayoutDirection();
+        calculateFlowLayout();
 
         List<Object> fields = new ArrayList<>();
 
         fields.add(simplifiedVectorDirectionPerPath);
-        fields.add(layoutDirectionPerPath);
+        fields.add(flowLayoutPerPath);
         fields.add(combinationError);
         fields.add(letterAccuracyError);
-        fields.add(layoutDirection);
+        fields.add(flowLayout);
         fields.add(outDegMultiplicated);
         fields.add(numberOfSplitsAndJoins);
         fields.add(numberOfBoundaryEvents);
@@ -54,29 +54,45 @@ public class LayoutDirectionResult extends Result {
         return fields;
     }
 
-    public long diaglayoutTime = 0;
-
-
-    public void calculateLayoutDirection() {
-        long timer = System.nanoTime();
-//        layoutDirection = null;
-        if (layoutDirectionPerPath.stream().filter(direction -> direction.equals("Other")).count() > layoutDirectionPerPath.size() * (2. / 3.)) {
-            layoutDirection = "Other";
+    public void calculateFlowLayout() {
+        if (flowLayoutPerPath.stream().filter(direction ->
+                direction.equals("Other")).count()
+                > flowLayoutPerPath.size() * (2. / 3.)) {
+            flowLayout = "Other";
         } else {
-            List<String> layoutDirectionPerPathNoOther = layoutDirectionPerPath.stream().filter(direction -> !direction.equals("Other")).collect(Collectors.toList());
-            Map<String, Long> layoutOccurences = layoutDirectionPerPathNoOther.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-            int numberOfPaths = layoutDirectionPerPathNoOther.size();
+            List<String> flowLayoutPerPathNoOther = flowLayoutPerPath.stream().filter(direction -> !direction.equals("Other")).collect(Collectors.toList());
+            Map<String, Long> layoutOccurences = flowLayoutPerPathNoOther.stream()
+                    .collect(Collectors.groupingBy(Function.identity(),
+                            Collectors.counting()));
+            int numberOfPaths = flowLayoutPerPathNoOther.size();
             if (!setDominatingLayout(layoutOccurences, numberOfPaths)) {
-                layoutOccurences = layoutDirectionPerPathNoOther.stream().collect(Collectors.groupingBy(s -> s.substring(0, s.indexOf("-", s.indexOf("-") + 1) != -1 ? s.indexOf("-", s.indexOf("-") + 1) : s.length()), Collectors.counting()));
+                layoutOccurences = flowLayoutPerPathNoOther.stream()
+                        .collect(Collectors.groupingBy(
+                                this::getBaselayoutAndOrientation,
+                                Collectors.counting()));
                 if (!setDominatingLayout(layoutOccurences, numberOfPaths)) {
-                    layoutOccurences = layoutDirectionPerPathNoOther.stream().collect(Collectors.groupingBy(s -> s.substring(0, s.contains("-") ? s.indexOf("-") : s.length()), Collectors.counting()));
+                    layoutOccurences = flowLayoutPerPathNoOther.stream()
+                            .collect(Collectors.groupingBy(
+                                    this::getBaselayout, Collectors.counting()));
                     if (!setDominatingLayout(layoutOccurences, numberOfPaths)) {
-                        layoutDirection = "Other";
+                        flowLayout = "Other";
                     }
                 }
             }
         }
-        diaglayoutTime = System.nanoTime() - timer;
+    }
+
+    private String getBaselayoutAndOrientation(String flowLayout) {
+        return flowLayout.substring(0,
+                flowLayout.indexOf("-", flowLayout.indexOf("-") + 1) != -1
+                        ? flowLayout.indexOf("-", flowLayout.indexOf("-") + 1)
+                        : flowLayout.length());
+    }
+
+    private String getBaselayout(String flowLayout) {
+        return flowLayout.substring(0, flowLayout.contains("-")
+                ? flowLayout.indexOf("-")
+                : flowLayout.length());
     }
 
 
@@ -84,18 +100,18 @@ public class LayoutDirectionResult extends Result {
         pathLayouts.entrySet().stream().max(Map.Entry.comparingByValue())
                 .ifPresent(entry -> {
                     if (entry.getValue() >= numberOfPaths * (2. / 3.)) {
-                        layoutDirection = entry.getKey();
+                        flowLayout = entry.getKey();
                     }
                 });
-        return layoutDirection != null;
+        return flowLayout != null;
     }
 
     public void addSimplifiedVectorDirectionPerPath(String pathDirections) {
         simplifiedVectorDirectionPerPath.add(pathDirections);
     }
 
-    public void addLayoutDirectionPerPath(String direction) {
-        layoutDirectionPerPath.add(direction);
+    public void addFlowLayoutPerPath(String direction) {
+        flowLayoutPerPath.add(direction);
     }
 
     public void setCombinationError(double combinationError) {
@@ -106,13 +122,13 @@ public class LayoutDirectionResult extends Result {
         this.letterAccuracyError = letterAccuracyError;
     }
 
-    public List<String> getLayoutDirectionPerPath() {
-        return layoutDirectionPerPath;
+    public List<String> getFlowLayoutPerPath() {
+        return flowLayoutPerPath;
     }
 
-    public String getLayoutDirection() {
-        calculateLayoutDirection();
-        return layoutDirection;
+    public String getFlowLayout() {
+        calculateFlowLayout();
+        return flowLayout;
     }
 
     public void setError(Error error) {

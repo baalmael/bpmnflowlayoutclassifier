@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import static bpmnlayoutanalyzer.flowlayout.Constants.*;
 
 
-public class LayoutDirectionAnalyzer {
+public class FlowLayoutAnalyzer {
 
     private static final String[] VALUES = {STRAIGHT_E_CLEAN_REGEX, STRAIGHT_E_LENDRIGHT_REGEX, STRAIGHT_E_LSTARTLEFT_REGEX, STRAIGHT_E_LENDLEFT_REGEX, STRAIGHT_E_LSTARTRIGHT_REGEX, STRAIGHT_E_LLSTARTLEFT_REGEX, STRAIGHT_E_LLSTARTRIGHT_REGEX, STRAIGHT_E_U_REGEX, STRAIGHT_E_N_REGEX, STRAIGHT_E_Z_REGEX, STRAIGHT_E_S_REGEX, STRAIGHT_S_CLEAN_REGEX, STRAIGHT_S_LENDRIGHT_REGEX, STRAIGHT_S_LSTARTLEFT_REGEX, STRAIGHT_S_LENDLEFT_REGEX, STRAIGHT_S_LSTARTRIGHT_REGEX, STRAIGHT_S_LLSTARTLEFT_REGEX, STRAIGHT_S_LLSTARTRIGHT_REGEX, STRAIGHT_S_U_REGEX, STRAIGHT_S_N_REGEX, STRAIGHT_S_Z_REGEX, STRAIGHT_S_S_REGEX, STRAIGHT_W_CLEAN_REGEX, STRAIGHT_W_LENDRIGHT_REGEX, STRAIGHT_W_LSTARTLEFT_REGEX, STRAIGHT_W_LENDLEFT_REGEX, STRAIGHT_W_LSTARTRIGHT_REGEX, STRAIGHT_W_LLSTARTLEFT_REGEX, STRAIGHT_W_LLSTARTRIGHT_REGEX, STRAIGHT_W_U_REGEX, STRAIGHT_W_N_REGEX, STRAIGHT_W_Z_REGEX, STRAIGHT_W_S_REGEX, STRAIGHT_N_CLEAN_REGEX, STRAIGHT_N_LENDRIGHT_REGEX, STRAIGHT_N_LSTARTLEFT_REGEX, STRAIGHT_N_LENDLEFT_REGEX, STRAIGHT_N_LSTARTRIGHT_REGEX, STRAIGHT_N_LLSTARTLEFT_REGEX, STRAIGHT_N_LLSTARTRIGHT_REGEX, STRAIGHT_N_U_REGEX, STRAIGHT_N_N_REGEX, STRAIGHT_N_Z_REGEX, STRAIGHT_N_S_REGEX, L_SE_CLEAN_REGEX, L_SE_LENDRIGHT_REGEX, L_SE_LSTARTLEFT_REGEX, L_SE_LENDLEFT_REGEX, L_SE_LSTARTRIGHT_REGEX, L_SE_LLSTARTLEFT_REGEX, L_SE_LLSTARTRIGHT_REGEX, L_SE_U_REGEX, L_SE_N_REGEX, L_SE_UNCLEAN_REGEX, L_WS_CLEAN_REGEX, L_WS_LENDRIGHT_REGEX, L_WS_LSTARTLEFT_REGEX, L_WS_LENDLEFT_REGEX, L_WS_LSTARTRIGHT_REGEX, L_WS_LLSTARTLEFT_REGEX, L_WS_LLSTARTRIGHT_REGEX, L_WS_U_REGEX, L_WS_N_REGEX, L_WS_UNCLEAN_REGEX, L_NW_CLEAN_REGEX, L_NW_LENDRIGHT_REGEX, L_NW_LSTARTLEFT_REGEX, L_NW_LENDLEFT_REGEX, L_NW_LSTARTRIGHT_REGEX, L_NW_LLSTARTLEFT_REGEX, L_NW_LLSTARTRIGHT_REGEX, L_NW_U_REGEX, L_NW_N_REGEX, L_NW_UNCLEAN_REGEX, L_EN_CLEAN_REGEX, L_EN_LENDRIGHT_REGEX, L_EN_LSTARTLEFT_REGEX, L_EN_LENDLEFT_REGEX, L_EN_LSTARTRIGHT_REGEX, L_EN_LLSTARTLEFT_REGEX, L_EN_LLSTARTRIGHT_REGEX, L_EN_U_REGEX, L_EN_N_REGEX, L_EN_UNCLEAN_REGEX, L_SW_CLEAN_REGEX, L_SW_LENDRIGHT_REGEX, L_SW_LSTARTLEFT_REGEX, L_SW_LENDLEFT_REGEX, L_SW_LSTARTRIGHT_REGEX, L_SW_LLSTARTLEFT_REGEX, L_SW_LLSTARTRIGHT_REGEX, L_SW_U_REGEX, L_SW_N_REGEX, L_SW_UNCLEAN_REGEX, L_WN_CLEAN_REGEX, L_WN_LENDRIGHT_REGEX, L_WN_LSTARTLEFT_REGEX, L_WN_LENDLEFT_REGEX, L_WN_LSTARTRIGHT_REGEX, L_WN_LLSTARTLEFT_REGEX, L_WN_LLSTARTRIGHT_REGEX, L_WN_U_REGEX, L_WN_N_REGEX, L_WN_UNCLEAN_REGEX, L_NE_CLEAN_REGEX, L_NE_LENDRIGHT_REGEX, L_NE_LSTARTLEFT_REGEX, L_NE_LENDLEFT_REGEX, L_NE_LSTARTRIGHT_REGEX, L_NE_LLSTARTLEFT_REGEX, L_NE_LLSTARTRIGHT_REGEX, L_NE_U_REGEX, L_NE_N_REGEX, L_NE_UNCLEAN_REGEX, L_ES_CLEAN_REGEX, L_ES_LENDRIGHT_REGEX, L_ES_LSTARTLEFT_REGEX, L_ES_LENDLEFT_REGEX, L_ES_LSTARTRIGHT_REGEX, L_ES_LLSTARTLEFT_REGEX, L_ES_LLSTARTRIGHT_REGEX, L_ES_U_REGEX, L_ES_N_REGEX, L_ES_UNCLEAN_REGEX, SNAKE_ES_CLEAN_REGEX, SNAKE_ES_STARTTOSIDE_REGEX, SNAKE_WS_CLEAN_REGEX, SNAKE_WS_STARTTOSIDE_REGEX, SNAKE_WN_CLEAN_REGEX, SNAKE_WN_STARTTOSIDE_REGEX, SNAKE_EN_CLEAN_REGEX, SNAKE_EN_STARTTOSIDE_REGEX, SNAKE_SE_CLEAN_REGEX, SNAKE_SE_STARTTOSIDE_REGEX, SNAKE_NE_CLEAN_REGEX, SNAKE_NE_STARTTOSIDE_REGEX, SNAKE_NW_CLEAN_REGEX, SNAKE_NW_STARTTOSIDE_REGEX, SNAKE_SW_CLEAN_REGEX, SNAKE_SW_STARTTOSIDE_REGEX, MULTILINE_ES_CLEAN_REGEX, MULTILINE_ES_STARTTOSIDE_REGEX, MULTILINE_ES_ENDTOSIDE_REGEX, MULTILINE_ES_STARTANDENDTOSIDE_REGEX, MULTILINE_WN_CLEAN_REGEX, MULTILINE_WN_STARTTOSIDE_REGEX, MULTILINE_WN_ENDTOSIDE_REGEX, MULTILINE_WN_STARTANDENDTOSIDE_REGEX, MULTILINE_EN_CLEAN_REGEX, MULTILINE_EN_STARTTOSIDE_REGEX, MULTILINE_EN_ENDTOSIDE_REGEX, MULTILINE_EN_STARTANDENDTOSIDE_REGEX, MULTILINE_WS_CLEAN_REGEX, MULTILINE_WS_STARTTOSIDE_REGEX, MULTILINE_WS_ENDTOSIDE_REGEX, MULTILINE_WS_STARTANDENDTOSIDE_REGEX, MULTILINE_SE_CLEAN_REGEX, MULTILINE_SE_STARTTOSIDE_REGEX, MULTILINE_SE_ENDTOSIDE_REGEX, MULTILINE_SE_STARTANDENDTOSIDE_REGEX, MULTILINE_NW_CLEAN_REGEX, MULTILINE_NW_STARTTOSIDE_REGEX, MULTILINE_NW_ENDTOSIDE_REGEX, MULTILINE_NW_STARTANDENDTOSIDE_REGEX, MULTILINE_NE_CLEAN_REGEX, MULTILINE_NE_STARTTOSIDE_REGEX, MULTILINE_NE_ENDTOSIDE_REGEX, MULTILINE_NE_STARTANDENDTOSIDE_REGEX, MULTILINE_SW_CLEAN_REGEX, MULTILINE_SW_STARTTOSIDE_REGEX, MULTILINE_SW_ENDTOSIDE_REGEX, MULTILINE_SL_STARTANDENDTOSIDE_REGEX, U_SE_REGEX, U_WS_REGEX, U_NW_REGEX, U_EN_REGEX, U_SW_REGEX, U_WN_REGEX, U_NE_REGEX, U_ES_REGEX, STAIRS_SE_REGEX, STAIRS_SW_REGEX, STAIRS_NW_REGEX, STAIRS_NE_REGEX, Z_ES_CLEAN_REGEX, Z_ES_LENDRIGHT_REGEX, Z_ES_LSTARTLEFT_REGEX, Z_ES_LENDLEFT_REGEX, Z_ES_LSTARTRIGHT_REGEX, Z_ES_LLSTARTLEFT_REGEX, Z_ES_LLSTARTRIGHT_REGEX, Z_ES_U_REGEX, Z_ES_N_REGEX, Z_ES_UNCLEAN_REGEX, Z_EN_CLEAN_REGEX, Z_EN_LENDRIGHT_REGEX, Z_EN_LSTARTLEFT_REGEX, Z_EN_LENDLEFT_REGEX, Z_EN_LSTARTRIGHT_REGEX, Z_EN_LLSTARTLEFT_REGEX, Z_EN_LLSTARTRIGHT_REGEX, Z_EN_U_REGEX, Z_EN_N_REGEX, Z_EN_UNCLEAN_REGEX, Z_WS_CLEAN_REGEX, Z_WS_LENDRIGHT_REGEX, Z_WS_LSTARTLEFT_REGEX, Z_WS_LENDLEFT_REGEX, Z_WS_LSTARTRIGHT_REGEX, Z_WS_LLSTARTLEFT_REGEX, Z_WS_LLSTARTRIGHT_REGEX, Z_WS_U_REGEX, Z_WS_N_REGEX, Z_WS_UNCLEAN_REGEX, Z_WN_CLEAN_REGEX, Z_WN_LENDRIGHT_REGEX, Z_WN_LSTARTLEFT_REGEX, Z_WN_LENDLEFT_REGEX, Z_WN_LSTARTRIGHT_REGEX, Z_WN_LLSTARTLEFT_REGEX, Z_WN_LLSTARTRIGHT_REGEX, Z_WN_U_REGEX, Z_WN_N_REGEX, Z_WN_UNCLEAN_REGEX, Z_SE_CLEAN_REGEX, Z_SE_LENDRIGHT_REGEX, Z_SE_LSTARTLEFT_REGEX, Z_SE_LENDLEFT_REGEX, Z_SE_LSTARTRIGHT_REGEX, Z_SE_LLSTARTLEFT_REGEX, Z_SE_LLSTARTRIGHT_REGEX, Z_SE_U_REGEX, Z_SE_N_REGEX, Z_SE_UNCLEAN_REGEX, Z_SW_CLEAN_REGEX, Z_SW_LENDRIGHT_REGEX, Z_SW_LSTARTLEFT_REGEX, Z_SW_LENDLEFT_REGEX, Z_SW_LSTARTRIGHT_REGEX, Z_SW_LLSTARTLEFT_REGEX, Z_SW_LLSTARTRIGHT_REGEX, Z_SW_U_REGEX, Z_SW_N_REGEX, Z_SW_UNCLEAN_REGEX, Z_NE_CLEAN_REGEX, Z_NE_LENDRIGHT_REGEX, Z_NE_LSTARTLEFT_REGEX, Z_NE_LENDLEFT_REGEX, Z_NE_LSTARTRIGHT_REGEX, Z_NE_LLSTARTLEFT_REGEX, Z_NE_LLSTARTRIGHT_REGEX, Z_NE_U_REGEX, Z_NE_N_REGEX, Z_NE_UNCLEAN_REGEX, Z_NW_CLEAN_REGEX, Z_NW_LENDRIGHT_REGEX, Z_NW_LSTARTLEFT_REGEX, Z_NW_LENDLEFT_REGEX, Z_NW_LSTARTRIGHT_REGEX, Z_NW_LLSTARTLEFT_REGEX, Z_NW_LLSTARTRIGHT_REGEX, Z_NW_U_REGEX, Z_NW_N_REGEX, Z_NW_UNCLEAN_REGEX, STRAIGHT_E_UNCLEAN_REGEX, STRAIGHT_S_UNCLEAN_REGEX, STRAIGHT_W_UNCLEAN_REGEX, STRAIGHT_N_UNCLEAN_REGEX};
     private static final String[] KEYS = {"Straight-E-Clean", "Straight-E-LEndRight", "Straight-E-LStartLeft", "Straight-E-LEndLeft", "Straight-E-LStartRight", "Straight-E-LLStartLeft", "Straight-E-LLStartRight", "Straight-E-U", "Straight-E-N", "Straight-E-Z", "Straight-E-S", "Straight-S-Clean", "Straight-S-LEndRight", "Straight-S-LStartLeft", "Straight-S-LEndLeft", "Straight-S-LStartRight", "Straight-S-LLStartLeft", "Straight-S-LLStartRight", "Straight-S-U", "Straight-S-N", "Straight-S-Z", "Straight-S-S", "Straight-W-Clean", "Straight-W-LEndRight", "Straight-W-LStartLeft", "Straight-W-LEndLeft", "Straight-W-LStartRight", "Straight-W-LLStartLeft", "Straight-W-LLStartRight", "Straight-W-U", "Straight-W-N", "Straight-W-Z", "Straight-W-S", "Straight-N-Clean", "Straight-N-LEndRight", "Straight-N-LStartLeft", "Straight-N-LEndLeft", "Straight-N-LStartRight", "Straight-N-LLStartLeft", "Straight-N-LLStartRight", "Straight-N-U", "Straight-N-N", "Straight-N-Z", "Straight-N-S", "L-SE-Clean", "L-SE-LEndRight", "L-SE-LStartLeft", "L-SE-LEndLeft", "L-SE-LStartRight", "L-SE-LLStartLeft", "L-SE-LLStartRight", "L-SE-U", "L-SE-N", "L-SE-Unclean", "L-WS-Clean", "L-WS-LEndRight", "L-WS-LStartLeft", "L-WS-LEndLeft", "L-WS-LStartRight", "L-WS-LLStartLeft", "L-WS-LLStartRight", "L-WS-U", "L-WS-N", "L-WS-Unclean", "L-NW-Clean", "L-NW-LEndRight", "L-NW-LStartLeft", "L-NW-LEndLeft", "L-NW-LStartRight", "L-NW-LLStartLeft", "L-NW-LLStartRight", "L-NW-U", "L-NW-N", "L-NW-Unclean", "L-EN-Clean", "L-EN-LEndRight", "L-EN-LStartLeft", "L-EN-LEndLeft", "L-EN-LStartRight", "L-EN-LLStartLeft", "L-EN-LLStartRight", "L-EN-U", "L-EN-N", "L-EN-Unclean", "L-SW-Clean", "L-SW-LEndRight", "L-SW-LStartLeft", "L-SW-LEndLeft", "L-SW-LStartRight", "L-SW-LLStartLeft", "L-SW-LLStartRight", "L-SW-U", "L-SW-N", "L-SW-Unclean", "L-WN-Clean", "L-WN-LEndRight", "L-WN-LStartLeft", "L-WN-LEndLeft", "L-WN-LStartRight", "L-WN-LLStartLeft", "L-WN-LLStartRight", "L-WN-U", "L-WN-N", "L-WN-Unclean", "L-NE-Clean", "L-NE-LEndRight", "L-NE-LStartLeft", "L-NE-LEndLeft", "L-NE-LStartRight", "L-NE-LLStartLeft", "L-NE-LLStartRight", "L-NE-U", "L-NE-N", "L-NE-Unclean", "L-ES-Clean", "L-ES-LEndRight", "L-ES-LStartLeft", "L-ES-LEndLeft", "L-ES-LStartRight", "L-ES-LLStartLeft", "L-ES-LLStartRight", "L-ES-U", "L-ES-N", "L-ES-Unclean", "Snake-ES-Clean", "Snake-ES-StartToSide", "Snake-WS-Clean", "Snake-WS-StartToSide", "Snake-WN-Clean", "Snake-WN-StartToSide", "Snake-EN-Clean", "Snake-EN-StartToSide", "Snake-SE-Clean", "Snake-SE-StartToSide", "Snake-NE-Clean", "Snake-NE-StartToSide", "Snake-NW-Clean", "Snake-NW-StartToSide", "Snake-SW-Clean", "Snake-SW-StartToSide", "Multiline-ES-Clean", "Multiline-ES-StartToSide", "Multiline-ES-Endtoside", "Multiline-ES-StartandEndtoside", "Multiline-WN-Clean", "Multiline-WN-StartToSide", "Multiline-WN-Endtoside", "Multiline-WN-StartandEndtoside", "Multiline-EN-Clean", "Multiline-EN-StartToSide", "Multiline-EN-Endtoside", "Multiline-EN-StartandEndtoside", "Multiline-WS-Clean", "Multiline-WS-StartToSide", "Multiline-WS-Endtoside", "Multiline-WS-StartandEndtoside", "Multiline-SE-Clean", "Multiline-SE-StartToSide", "Multiline-SE-Endtoside", "Multiline-SE-StartandEndtoside", "Multiline-NW-Clean", "Multiline-NW-StartToSide", "Multiline-NW-Endtoside", "Multiline-NW-StartandEndtoside", "Multiline-NE-Clean", "Multiline-NE-StartToSide", "Multiline-NE-Endtoside", "Multiline-NE-StartandEndtoside", "Multiline-SW-Clean", "Multiline-SW-StartToSide", "Multiline-SW-Endtoside", "Multiline-SL-StartandEndtoside", "U-SE", "U-WS", "U-NW", "U-EN", "U-SW", "U-WN", "U-NE", "U-ES", "Stairs-SE", "Stairs-SW", "Stairs-NW", "Stairs-NE", "Z-ES-Clean", "Z-ES-LEndRight", "Z-ES-LStartLeft", "Z-ES-LEndLeft", "Z-ES-LStartRight", "Z-ES-LLStartLeft", "Z-ES-LLStartRight", "Z-ES-U", "Z-ES-N", "Z-ES-Unclean", "Z-EN-Clean", "Z-EN-LEndRight", "Z-EN-LStartLeft", "Z-EN-LEndLeft", "Z-EN-LStartRight", "Z-EN-LLStartLeft", "Z-EN-LLStartRight", "Z-EN-U", "Z-EN-N", "Z-EN-Unclean", "Z-WS-Clean", "Z-WS-LEndRight", "Z-WS-LStartLeft", "Z-WS-LEndLeft", "Z-WS-LStartRight", "Z-WS-LLStartLeft", "Z-WS-LLStartRight", "Z-WS-U", "Z-WS-N", "Z-WS-Unclean", "Z-WN-Clean", "Z-WN-LEndRight", "Z-WN-LStartLeft", "Z-WN-LEndLeft", "Z-WN-LStartRight", "Z-WN-LLStartLeft", "Z-WN-LLStartRight", "Z-WN-U", "Z-WN-N", "Z-WN-Unclean", "Z-SE-Clean", "Z-SE-LEndRight", "Z-SE-LStartLeft", "Z-SE-LEndLeft", "Z-SE-LStartRight", "Z-SE-LLStartLeft", "Z-SE-LLStartRight", "Z-SE-U", "Z-SE-N", "Z-SE-Unclean", "Z-SW-Clean", "Z-SW-LEndRight", "Z-SW-LStartLeft", "Z-SW-LEndLeft", "Z-SW-LStartRight", "Z-SW-LLStartLeft", "Z-SW-LLStartRight", "Z-SW-U", "Z-SW-N", "Z-SW-Unclean", "Z-NE-Clean", "Z-NE-LEndRight", "Z-NE-LStartLeft", "Z-NE-LEndLeft", "Z-NE-LStartRight", "Z-NE-LLStartLeft", "Z-NE-LLStartRight", "Z-NE-U", "Z-NE-N", "Z-NE-Unclean", "Z-NW-Clean", "Z-NW-LEndRight", "Z-NW-LStartLeft", "Z-NW-LEndLeft", "Z-NW-LStartRight", "Z-NW-LLStartLeft", "Z-NW-LLStartRight", "Z-NW-U", "Z-NW-N", "Z-NW-Unclean", "Straight-E-Unclean", "Straight-S-Unclean", "Straight-W-Unclean", "Straight-N-Unclean"};
@@ -25,15 +25,15 @@ public class LayoutDirectionAnalyzer {
 
     private static final String[] HEADERS;
 
-    private final List<LayoutDirectionResult> results = new ArrayList<>();
+    private final List<FlowLayoutResult> results = new ArrayList<>();
 
     static {
         List<String> headers = new ArrayList<>(Arrays.asList(
                 "SimplifiedVectorDirectionPerPath",
-                "LayoutDirectionPerPath",
+                "FlowLayoutPerPath",
                 "CombinationError",
                 "LetterAccuracyError",
-                "LayoutDirection",
+                "FlowLayout",
                 "OutDegMultiplicated",
                 "NumberOfSplitsAndJoins",
                 "NumberOfBoundaryEvents",
@@ -50,7 +50,7 @@ public class LayoutDirectionAnalyzer {
 
     public void analyze(BpmnProcess p) {
         long startTime = System.nanoTime();
-        LayoutDirectionResult result = new LayoutDirectionResult(p);
+        FlowLayoutResult result = new FlowLayoutResult(p);
         List<Lane> lanes = p.getLanes();
         double combinationErrorSum = 0.0;
         double letterAccuracyErrorSum = 0.0;
@@ -68,42 +68,42 @@ public class LayoutDirectionAnalyzer {
                 VectorChain vectorChain = traceToVectorChain(trace, lanes, result);
                 if (vectorChain.getVectors().size() != 0) {
                     vectorChain.simplify();
-                    String pathDirections = vectorChain.getDiscreteVectorDirections();
-                    result.addSimplifiedVectorDirectionPerPath(pathDirections);
+                    String discreteVectorDirections = vectorChain.getDiscreteVectorDirections();
+                    result.addSimplifiedVectorDirectionPerPath(discreteVectorDirections);
 
-                    determinePathLayout(vectorChain, pathDirections, result);
+                    determinePathLayout(vectorChain, discreteVectorDirections, result);
 
 
                     combinationErrorSum += vectorChain.getCombinationError();
                     letterAccuracyErrorSum += vectorChain.letterAccuracyError();
                 }
             } else {
-                result = new LayoutDirectionResult(p);
+                result = new FlowLayoutResult(p);
                 result.setError(Error.NO_LAYOUT_DATA);
                 results.add(result);
                 return;
             }
         }
-        if (result.getLayoutDirectionPerPath().size() == 0) {
-            result = new LayoutDirectionResult(p);
+        if (result.getFlowLayoutPerPath().size() == 0) {
+            result = new FlowLayoutResult(p);
             result.setError(Error.NO_START_ENDNODE_PAIR);
             results.add(result);
             return;
         }
-        result.setCombinationError(combinationErrorSum / result.getLayoutDirectionPerPath().size());
-        result.setLetterAccuracyError(letterAccuracyErrorSum / result.getLayoutDirectionPerPath().size());
+        result.setCombinationError(combinationErrorSum / result.getFlowLayoutPerPath().size());
+        result.setLetterAccuracyError(letterAccuracyErrorSum / result.getFlowLayoutPerPath().size());
         result.setAnalyzingTime(System.nanoTime() - startTime);
-        result.calculateLayoutDirection();
+        result.calculateFlowLayout();
         results.add(result);
     }
 
-    private void determinePathLayout(VectorChain vectorChain, String discreteVectorDirections, LayoutDirectionResult result) {
+    private void determinePathLayout(VectorChain vectorChain, String discreteVectorDirections, FlowLayoutResult result) {
         ArrayList<String> possiblePathLayouts = new ArrayList<>();
         matchDirections(discreteVectorDirections, possiblePathLayouts);
         if (possiblePathLayouts.size() == 0) {
-            result.addLayoutDirectionPerPath("Other");
+            result.addFlowLayoutPerPath("Other");
         } else if (possiblePathLayouts.size() == 1) {
-            result.addLayoutDirectionPerPath(possiblePathLayouts.get(0));
+            result.addFlowLayoutPerPath(possiblePathLayouts.get(0));
         } else {
             if (possiblePathLayouts.stream().filter(s -> s.contains("Multiline")).count() == possiblePathLayouts.size()) {
                 // only Multilines found
@@ -119,24 +119,24 @@ public class LayoutDirectionAnalyzer {
                 matchDirections(newPathDirections, possiblePathLayouts);
             }
             if (possiblePathLayouts.size() == 0) {
-                result.addLayoutDirectionPerPath("Other");
+                result.addFlowLayoutPerPath("Other");
             } else {
-                result.addLayoutDirectionPerPath(possiblePathLayouts.get(0));
+                result.addFlowLayoutPerPath(possiblePathLayouts.get(0));
             }
         }
     }
 
-    private void matchDirections(String pathDirections, ArrayList<String> directions) {
+    private void matchDirections(String pathDirections, ArrayList<String> possibleLayouts) {
         for (Map.Entry<String, String> entry : REGEXES.entrySet()) {
-            if (!(entry.getKey().contains("-Unclean") && directions.size() != 0)) {
+            if (!(entry.getKey().contains("-Unclean") && possibleLayouts.size() != 0)) {
                 if (pathDirections.matches(entry.getValue())) {
-                    directions.add(entry.getKey());
+                    possibleLayouts.add(entry.getKey());
                 }
             }
         }
     }
 
-    private VectorChain traceToVectorChain(Trace trace, List<Lane> lanes, LayoutDirectionResult result) {
+    private VectorChain traceToVectorChain(Trace trace, List<Lane> lanes, FlowLayoutResult result) {
         List<FlowNode> flowNodes = trace.getFlowNodes();
         VectorChain vectorChain = new VectorChain();
         FlowNode prevNode = flowNodes.get(0);
@@ -155,7 +155,7 @@ public class LayoutDirectionAnalyzer {
         return vectorChain;
     }
 
-    private LayoutDirectionResult setMetrics(BpmnProcess p, List<Trace> traces, LayoutDirectionResult result) {
+    private FlowLayoutResult setMetrics(BpmnProcess p, List<Trace> traces, FlowLayoutResult result) {
         result.setNumberOfFlowNodes(p.getFlowNodes().size());
 
         long outDegMultiplicated = 1;
@@ -178,21 +178,21 @@ public class LayoutDirectionAnalyzer {
         result.setNumberOfBoundaryEvents(numberOfBoundaryEvents);
 
         if (p.getStartFlowNodes().size() == 0) {
-            result = new LayoutDirectionResult(p);
+            result = new FlowLayoutResult(p);
             result.setError(Error.NO_CLEAR_STARTNODE);
             results.add(result);
             return null;
         }
 
         if (p.getEndFlowNodes().size() == 0) {
-            result = new LayoutDirectionResult(p);
+            result = new FlowLayoutResult(p);
             result.setError(Error.NO_CLEAR_ENDNODE);
             results.add(result);
             return null;
         }
 
         if (p.getSequenceFlows().size() == 0) {
-            result = new LayoutDirectionResult(p);
+            result = new FlowLayoutResult(p);
             result.setError(Error.NO_SEQUENCE_FLOW);
             results.add(result);
             return null;
@@ -200,7 +200,7 @@ public class LayoutDirectionAnalyzer {
 
         for (SequenceFlow sequenceFlow : p.getSequenceFlows()) {
             if (!sequenceFlow.hasLayoutData() || sequenceFlow.getWayPoints().getWaypoints() == null || sequenceFlow.getWayPoints().getWaypoints().size() == 0) {
-                result = new LayoutDirectionResult(p);
+                result = new FlowLayoutResult(p);
                 result.setError(Error.NO_LAYOUT_DATA);
                 results.add(result);
                 return null;
@@ -209,13 +209,13 @@ public class LayoutDirectionAnalyzer {
             FlowNode source = sequenceFlow.getSource();
             FlowNode target = sequenceFlow.getTarget();
             if (!source.hasLayoutData() || !target.hasLayoutData()) {
-                result = new LayoutDirectionResult(p);
+                result = new FlowLayoutResult(p);
                 result.setError(Error.NO_LAYOUT_DATA);
                 results.add(result);
                 return null;
             }
             if (isNotClose(source.getBounds(), new Vector(waypoints.get(0))) || isNotClose(target.getBounds(), new Vector(waypoints.get(waypoints.size() - 1)))) {
-                result = new LayoutDirectionResult(p);
+                result = new FlowLayoutResult(p);
                 result.setError(Error.NOT_ATTACHED_SEQUENCEFLOW);
                 results.add(result);
                 return null;
@@ -316,7 +316,7 @@ public class LayoutDirectionAnalyzer {
     }
 
     private Vector calculateFlowVector(FlowNode prevNode, FlowNode thisNode, List<Lane> lanes, Vector
-            prevFlowVector, Trace trace, int indexOfThisNode, LayoutDirectionResult result) {
+            prevFlowVector, Trace trace, int indexOfThisNode, FlowLayoutResult result) {
         Vector v = new Vector(prevNode.getBounds().getCenter(), thisNode.getBounds().getCenter(), false); // Idee ist, dass die Rückkante von Multiline mit nichts kombiniert werden kann
         v.setCenterPosition(prevNode.getBounds().getCenter().plus(v.divide(2.0)));
 
@@ -484,10 +484,10 @@ public class LayoutDirectionAnalyzer {
     }
 
     public String getShortName() {
-        return "layoutdirection";
+        return "flowlayout";
     }
 
-    public List<LayoutDirectionResult> getResults() {
+    public List<FlowLayoutResult> getResults() {
         return results;
     }
 
